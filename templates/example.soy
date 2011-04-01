@@ -1,0 +1,14 @@
+{namespace clj_soy.example}
+
+/**
+ * Says hello
+ * @param? greeting A word to use for greeting
+ * @param name A name
+ */
+{template .helloWorld}
+  {if not $greeting}
+    Hello, {$name}!
+  {else}
+    {$greeting}, {$name}!
+  {/if}
+{/template}
