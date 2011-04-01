@@ -53,6 +53,7 @@ An example:
 
 ## Todo
 
+* Add some higher-order convenience functions
 * Provide Clojure-level support for internationalization
 * Provide Clojure-level support for precompiled javascript template generation
 
