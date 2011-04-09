@@ -1,0 +1,58 @@
+* Clojure + Soy = Yummy
+** Getting Started
+   - lein new soybox
+   - *clojars.org dance*
+   - project.clj hackery
+   - lein deps, lein swank, cake deps, cake swank, etc.
+   - (ns soybox.core (:use clj-soy.core))
+   - yadda, yadda
+** Building Hello World
+   {namespace soybox.application}
+   {template .hello}
+     Hello, {$name}
+   {/template}
+   ...meanwhile, back in clojure town...
+   (def template-files (i-want-soy "/Users/username/soy/templates/dir"))
+   (render template-files "my.templates.hello" {:name "Luke"})
+*** Ideas
+    {:namespace "soybox.application"
+      {:template "hello", :content ["Hello, " name]}
+      {:template "hello2", "Hello, #{name}"}
+      {:template "hello3", {:content ["Hello, " name]}}
+      {:template "other_ideas?", ,,,}}
+*** Questions
+    - Would string interpolation be valuable?
+    - Can templates be nested in templates?
+      - Should they be passed as the value of a :content key?
+** Tasks [%]
+*** TODO Write some pseudo-code to see things from the top-down
+    (use 'soy.core)
+    (use 'compojure.core)
+    (require '[compojure handlers])
+    (def template-garden (add-templates "/Users/username/soy/templates/dir"))
+    (defroutes soyroutes
+      (GET "/" (render templates "my.template.application.hello" {:name "Devin"})))
+    ...
+** Questions
+*** Can we create template *files* programmatically?
+    (deftemplate ...) ; name?
+
+    (deftemple "newtemplate" {:parent "application"} [body] ; name?
+      (comment {:namespace "newtemplate"}) ; inferred by specifying the parent
+      {:template "hello", :body body})
+*** What are the smallest composable pieces of templates?
+*** Are templates decorated in the macro?
+*** Can you build a hierarchy of templates ad-hoc?
+*** Is Devin thinking too hard about these questions up front? ;)
+*** Should the names of the pieces be defined in a different context?
+    - So, should we talk about "partials", and keep the ambiguity of "template"
+      out of the picture?
+*** What does a user do manually on the fs and what happens magically?
+    - Basic template generation seems like a good idea.
+      - Is that a script or a function?
+      - Is it both?
+      - Is it neither?
+*** Is there anything that could be made "dual" (stolen from Rich's brain)
+    - Can we simplify some fundamental aspect of the templating process
+      such that we are able to undo something by doing it again?
+    - What kind of scenario would we want to "involute"?

@@ -1,0 +1,72 @@
+Outstanding Questions (for Rich)
+* Is using strings for expressions ok, or should we render a quoted sexp into a Google Template expression?
+    "round($pi, 2) == 3.14" vs '(== (round $pi 2) 3.14)
+* Is reading (not evaluating!) symbols of the form $foo.bar dangerous?
+
+
+
+Questions:
+* Variable resolution?
+    Use $ to demarcate variables
+* Commands?
+** Sub-commands always nested
+*** More "logical"
+** Sub-commands not nested - we're doing this
+*** More like raw Closure Templates
+*** More like Clojure (when it does such things, e.g, cond, condp). In clojure, paren-wrapping is only used to establish new "scopes". That's not what's going on here. 
+* Expressions
+** Are just strings, the macro builder knows they're expressions
+* Template calls
+** as in:
+  (t/template qux)
+  (t/template qux $author)
+  (t/template foo.bar.qux)
+
+
+
+"
+<html>
+  <head><title>${title}</title></head>
+  <body>
+  {foreach entry in entries}
+    <div id='entry'>{call foo.bar.qux data='all' /}</div>
+    <div id='entry'>{call foo.bar.qux data='all' }
+                      {param aaa: 'aaa'}
+                      {param bbb: 'bbb'}
+                    {/call}
+    </div>
+  {/foreach}
+  </body>
+</html>
+"
+
+
+{if round($pi, 2) == 3.14}
+  {$pi} is a good approximation of pi.
+{elseif round($pi) == 3}
+  {$pi} is a bad approximation of pi.
+{else}
+  {$pi} is nowhere near the value of pi.
+{/if}
+
+
+{foreach $operand in $operands}
+  {if not isFirst($operand)} + {/if}
+  {$operand}
+{ifempty}
+  0
+{/foreach}
+
+{foreach <local_var> in <data_ref>}
+  ...
+{ifempty}
+  ...
+{/foreach}
+
+
+{call foo.bar.qux data="all" /}
+{call foo.bar.qux data="$author" /}
+{call foo.bar.qux data="$author"}
+  {param foo: 1}
+  {param bar: 2}
+{/call}
