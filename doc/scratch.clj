@@ -25,8 +25,7 @@
   "<head><title>" ?? "</title></head>"
   "<body>"
   (t/foreach
-   "<div id='entry>" (qux) "</div>")
-  "</body></html>")
+   "<div id='entry>" (qux) "</div>")  "</body></html>")
 
 
 
@@ -42,6 +41,10 @@
   (t/foreach [entry entries]
              "<div id='entry>" (qux) "</div>")
   "</body></html>")
+
+
+
+
 
 (def ^{:soy true} baz "{namespace foo.bar.baz} {template ...}")
 
@@ -105,6 +108,7 @@
              "<div id='entry>" (qux ) "</div>")
   "</body></html>")
 
+"<html>" (print-> data.foo #{:dothis :dothat})
 
 ;; 1
 (qux)
@@ -123,6 +127,7 @@
 (t/template qux $author)
 (t/template foo.bar.qux)
 
+(t/call qux)
 
 
 
@@ -131,3 +136,15 @@
 
 (deftemplate )
 (baz)
+
+
+
+;; (clojure.contrib.string/join "/" [04 15 2011])
+
+
+(str "{template}" "foo" "{/template}")
+(template "{template}" "foo" "{/template}")
+
+
+
+
