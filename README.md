@@ -4,7 +4,7 @@ A library for using Google's Closure Templates in Clojure. For information on Cl
 
 ## Usage
 
-To get started, just reference the clj-soy artifact in the dependencies section of your project.clj file: `[clj-soy/clj-soy "0.1.0"]`   
+To get started, just reference the clj-soy artifact in the dependencies section of your project.clj file: `[clj-soy/clj-soy "0.3.0"]`   
 Then, you can write a template in a *.soy file. For documentation on Soy templates, see [Google's documentation](http://code.google.com/closure/templates/docs/commands.html). They look like this:
 
     {namespace clj_soy.example}

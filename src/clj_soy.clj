@@ -1,6 +1,7 @@
 (ns clj-soy
   (:use clj-soy.file)
-  (require [clojure.walk :as walk])
+  (require [clojure.walk :as walk]
+           [clojure.java.io :as jio])
   (:import com.google.template.soy.SoyFileSet
            com.google.template.soy.SoyFileSet$Builder
            com.google.template.soy.data.SoyMapData
@@ -10,10 +11,16 @@
   [data]
   (SoyMapData. (walk/stringify-keys data)))
 
-(defn from-files [file]
+(defn from-files [file & [globals]]
+  "Takes an arguement coercable to File and returns a compiled Tofu object.
+
+  If file is a directory, compile all .soy files beneath it. globals are used to
+  set variables at compile time."
   (let [builder (SoyFileSet$Builder.)]
-       (add-file builder file)
-       (.compileToJavaObj (.build builder))))
+    (when globals (.setCompileTimeGlobals builder (walk/stringify-keys globals)))
+    (doseq [f (filter #(.endsWith (str %) ".soy") (file-seq (jio/as-file file)))]
+      (.add builder f))
+    (.compileToJavaObj (.build builder))))
 
 (defn- get-defined-soy-templates [ns]
   (map (fn [v] [(deref v) (:file (meta v))])

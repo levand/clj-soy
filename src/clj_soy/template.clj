@@ -1,7 +1,6 @@
 (ns clj-soy.template
   (:require [clojure.walk :as walk]
-            [clojure.string :as str]
-            [clojure.contrib.string :as cstr])
+            [clojure.string :as str])
   (:use [clj-soy.utils :only (dbg) :as u]))
 
 (defprotocol SoyString
@@ -47,7 +46,7 @@
 (defn map-to-attributes
   "Converts a map to a string of key='value' statements"
   [attrs]
-  (cstr/join \space (map (fn [[k v]]
+  (str/join \space (map (fn [[k v]]
                            (str k "=" "\"" v "\""))
                          (walk/stringify-keys attrs))))
 
